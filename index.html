@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedCare Hospital | Level 3 Management System</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="loginPage" class="login-page">
+  <div class="login-card">
+    <div class="medical-3d">✚</div>
+    <div class="brand">MED<span>CARE</span></div>
+    <p>Hospital Patient Management System</p>
+    <form id="loginForm">
+      <label>Username</label><input id="username" required placeholder="admin">
+      <label>Password</label><input id="password" type="password" required placeholder="admin123">
+      <button class="btn primary wide">Sign In</button>
+    </form>
+    <div id="loginMessage"></div>
+    <small>Demo: <b>admin</b> / <b>admin123</b></small>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+<header class="topbar">
+  <div class="brand-wrap"><div class="logo3d">✚</div><div><h1>MedCare Hospital</h1><span>Patient Management System</span></div></div>
+  <div class="top-actions"><span id="liveClock"></span><button id="logoutBtn" class="btn ghost">Logout</button></div>
+</header>
+
+<div class="layout">
+<aside class="sidebar">
+  <div class="side-title">MAIN MENU</div>
+  <button class="nav active" data-section="dashboard">◈ <span>Dashboard</span></button>
+  <button class="nav" data-section="patients">♙ <span>Patients</span></button>
+  <button class="nav" data-section="doctors">⚕ <span>Doctors</span></button>
+  <button class="nav" data-section="appointments">◷ <span>Appointments</span></button>
+  <button class="nav" data-section="emergency">⚠ <span>Emergency</span></button>
+  <button class="nav" data-section="beds">▦ <span>Bed Management</span></button>
+  <button class="nav" data-section="prescriptions">Rx <span>Prescriptions</span></button>
+  <button class="nav" data-section="labs">⌬ <span>Lab Reports</span></button>
+  <button class="nav" data-section="billing">₹ <span>Billing</span></button>
+  <button class="nav" data-section="reports">▥ <span>Reports</span></button>
+  <div class="side-footer">● System Online<br><small>Secure demo environment</small></div>
+</aside>
+
+<main class="content">
+<section id="dashboard" class="section active">
+  <div class="hero">
+    <div><div class="eyebrow">HOSPITAL OPERATIONS</div><h2>Good day, Administrator</h2><p>Monitor patients, appointments and emergency operations from one place.</p></div>
+    <div class="hero-orb">✚</div>
+  </div>
+  <div class="stats">
+    <div class="stat"><span>👥</span><b id="totalPatients">0</b><small>Total Patients</small></div>
+    <div class="stat"><span>⚕</span><b id="totalDoctors">0</b><small>Doctors</small></div>
+    <div class="stat"><span>◷</span><b id="totalAppointments">0</b><small>Appointments</small></div>
+    <div class="stat alert"><span>⚠</span><b id="totalEmergency">0</b><small>Emergency Queue</small></div>
+    <div class="stat"><span>▦</span><b id="availableBeds">0</b><small>Available Beds</small></div>
+  </div>
+  <div class="grid2">
+    <div class="panel"><div class="panel-head"><h3>Today's Appointments</h3><button class="btn primary small" data-go="appointments">Manage</button></div><div id="dashAppointments" class="list"></div></div>
+    <div class="panel"><div class="panel-head"><h3>Emergency Queue</h3><button class="btn danger small" data-go="emergency">Open Queue</button></div><div id="dashEmergency" class="list"></div></div>
+  </div>
+</section>
+
+<section id="patients" class="section">
+<div class="section-head"><div><h2>Patient Management</h2><p>Register and maintain patient records.</p></div><button class="btn primary" id="addPatientBtn">＋ Add Patient</button></div>
+<div class="toolbar"><input id="patientSearch" placeholder="Search patient by name, ID or diagnosis..."><button class="btn ghost" id="sortAge">Sort by Age</button><button class="btn ghost" id="findPatient">DSA Linear Search</button></div>
+<div class="panel table-wrap"><table><thead><tr><th>ID</th><th>Patient</th><th>Age</th><th>Gender</th><th>Blood</th><th>Diagnosis</th><th>Status</th><th>Action</th></tr></thead><tbody id="patientTable"></tbody></table></div>
+</section>
+
+<section id="doctors" class="section">
+<div class="section-head"><div><h2>Doctors & Specialists</h2><p>Hospital medical staff directory.</p></div><button class="btn primary" id="addDoctorBtn">＋ Add Doctor</button></div>
+<div id="doctorGrid" class="doctor-grid"></div>
+</section>
+
+<section id="appointments" class="section">
+<div class="section-head"><div><h2>Appointments</h2><p>Schedule and manage patient visits.</p></div><button class="btn primary" id="addAppointmentBtn">＋ Book Appointment</button></div>
+<div class="panel table-wrap"><table><thead><tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Date</th><th>Time</th><th>Status</th><th>Action</th></tr></thead><tbody id="appointmentTable"></tbody></table></div>
+</section>
+
+<section id="emergency" class="section">
+<div class="section-head"><div><h2>Emergency Queue</h2><p>FIFO — First In, First Out patient processing.</p></div><div><button class="btn danger" id="serveEmergency">Serve Next</button><button class="btn primary" id="addEmergencyBtn">＋ Add Emergency</button></div></div>
+<div class="queue-banner"><b>🚨 Priority Care</b><span>Patients are served in queue order.</span></div>
+<div class="panel table-wrap"><table><thead><tr><th>Queue</th><th>Patient</th><th>Emergency Type</th><th>Arrival</th><th>Status</th></tr></thead><tbody id="emergencyTable"></tbody></table></div>
+</section>
+
+<section id="beds" class="section">
+<div class="section-head"><div><h2>Bed Management</h2><p>Live overview of inpatient bed capacity.</p></div><button class="btn primary" id="addBedBtn">＋ Add Bed</button></div>
+<div class="bed-stats"><div><b id="bedTotal">0</b><span>Total Beds</span></div><div><b id="bedOccupied">0</b><span>Occupied</span></div><div><b id="bedAvailable">0</b><span>Available</span></div></div>
+<div id="bedGrid" class="bed-grid"></div>
+</section>
+
+<section id="prescriptions" class="section">
+<div class="section-head"><div><h2>Prescriptions</h2><p>Digital medication records.</p></div><button class="btn primary" id="addPrescriptionBtn">＋ New Prescription</button></div>
+<div class="panel table-wrap"><table><thead><tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Medicine</th><th>Dosage</th><th>Duration</th></tr></thead><tbody id="prescriptionTable"></tbody></table></div>
+</section>
+
+<section id="labs" class="section">
+<div class="section-head"><div><h2>Laboratory Reports</h2><p>Track diagnostic tests and results.</p></div><button class="btn primary" id="addLabBtn">＋ Add Lab Report</button></div>
+<div class="panel table-wrap"><table><thead><tr><th>Report ID</th><th>Patient</th><th>Test</th><th>Result</th><th>Status</th><th>Date</th></tr></thead><tbody id="labTable"></tbody></table></div>
+</section>
+
+<section id="billing" class="section">
+<div class="section-head"><div><h2>Billing & Payments</h2><p>Simple hospital billing records.</p></div><button class="btn primary" id="addBillBtn">＋ Create Bill</button></div>
+<div class="bill-total">Total Revenue <b id="revenue">₹0</b></div>
+<div class="panel table-wrap"><table><thead><tr><th>Bill ID</th><th>Patient</th><th>Service</th><th>Amount</th><th>Status</th></tr></thead><tbody id="billingTable"></tbody></table></div>
+</section>
+
+<section id="reports" class="section">
+<div class="section-head"><div><h2>Hospital Reports</h2><p>Operational summary generated from system records.</p></div><button class="btn primary" id="printReport">🖨 Print Report</button></div>
+<div class="report-cards"><div><b id="rPatients">0</b><span>Patients</span></div><div><b id="rAppointments">0</b><span>Appointments</span></div><div><b id="rEmergency">0</b><span>Emergency Cases</span></div><div><b id="rRevenue">₹0</b><span>Revenue</span></div></div>
+<div class="panel report-panel"><h3>DSA Concepts Used</h3><div class="dsa"><span>🔎 Linear Search</span><span>↕ Sorting</span><span>🚨 Queue / FIFO</span><span>📋 Array / Records</span></div><p>This prototype demonstrates practical Data Structures and CRUD operations in a hospital workflow.</p></div>
+</section>
+</main></div>
+</div>
+
+<div id="modal" class="modal"><div class="modal-card"><button id="closeModal" class="modal-close">×</button><h3 id="modalTitle">Form</h3><form id="modalForm"></form><div class="modal-actions"><button type="button" class="btn ghost" id="cancelModal">Cancel</button><button type="submit" form="modalForm" class="btn primary" id="saveModal">Save</button></div></div></div>
+<div id="toast"></div>
+<script src="script.js"></script>
+</body>
+</html>
